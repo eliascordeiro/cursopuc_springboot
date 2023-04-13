@@ -41,15 +41,4 @@ public class ProductDTO {
     @DecimalMin(value = "0.01", message = "Valor do totalMontagem tem que ser maior que 0.00")
     @Digits(integer=7, fraction=2)
     private BigDecimal totalMontagem;
-
-    public ProductDTO(String codigo, String descricao, BigDecimal precoUnitario, BigDecimal quantidade, BigDecimal totalProdutos, BigDecimal percentualMontagem, BigDecimal totalMontagem) {
-        this.codigo = codigo;
-        this.descricao = descricao;
-        this.precoUnitario = precoUnitario;
-        this.quantidade = quantidade;
-        this.totalProdutos = totalProdutos;
-        this.percentualMontagem = percentualMontagem;
-        this.totalMontagem = totalMontagem;
-    }
-
 }
