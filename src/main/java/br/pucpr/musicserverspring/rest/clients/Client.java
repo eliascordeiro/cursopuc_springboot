@@ -1,6 +1,8 @@
 package br.pucpr.musicserverspring.rest.clients;
 
 import br.pucpr.musicserverspring.rest.products.Product;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -11,6 +13,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.*;
@@ -20,7 +23,12 @@ import java.util.*;
 @Setter
 @ToString
 @NoArgsConstructor
-//@NamedQuery(name="Client.findByGenre", query = "SELECT a from Client a join a.genres g where g = :genre ORDER BY a.name")
+@NamedQuery(name="Client.findById",
+            query = "SELECT a FROM Client a WHERE a.id = :id ORDER BY a.nome")
+
+@NamedQuery(name="Client.findByName",
+        query = "SELECT a FROM Client a WHERE a.nome LIKE '%'||:nome||'%'")
+
 public class Client {
 
     @Id
@@ -52,10 +60,12 @@ public class Client {
     @NotBlank
     private String complemento;
 
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd/MM/yyyy")
     private Date previsao;
 
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    @Column(updatable = false)
+    @CreationTimestamp
+    @JsonIgnore
     private Date dataCadastro;
 
     private Long montador;
